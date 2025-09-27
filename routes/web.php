@@ -20,6 +20,15 @@ Route::get('/demo', function () {
     return view('demo-separation');
 })->name('demo');
 
+// Health check route
+Route::get('/health', function () {
+    return response()->json([
+        'status' => 'ok',
+        'timestamp' => now(),
+        'app' => config('app.name')
+    ]);
+});
+
 // Root route - Homepage for customers
 Route::get('/', [CustomerController::class, 'homepage'])->name('home');
 
