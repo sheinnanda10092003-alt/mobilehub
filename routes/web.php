@@ -24,9 +24,14 @@ Route::get('/demo', function () {
 Route::get('/health', function () {
     return response()->json([
         'status' => 'ok',
-        'timestamp' => now(),
-        'app' => config('app.name')
+        'timestamp' => date('Y-m-d H:i:s'),
+        'app' => 'MobileHub'
     ]);
+});
+
+// Simple test route
+Route::get('/test', function () {
+    return 'Laravel is working on Render!';
 });
 
 // Root route - Homepage for customers
