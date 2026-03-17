@@ -65,6 +65,8 @@
 <!-- Products Section -->
 <section id="products" class="py-5">
     <div class="container">
+        <!-- Load quantity controls script -->
+        <script src="{{ asset('js/quantity-controls.js') }}"></script>
         <!-- Search Results Header -->
         @if($search)
             <div class="text-center mb-4">
@@ -230,24 +232,20 @@
                             @auth('web')
                                 @if($phone->hasVariants())
                                     <!-- Variant-based cart form -->
-                                    <form method="POST" action="{{ route('cart.add.variant') }}" class="mt-3 variant-cart-form" data-product="{{ $phone->ProductID }}">
+                                    <form id="variant-form-{{ $phone->ProductID }}" method="POST" action="{{ route('cart.add.variant') }}" class="mt-3 variant-cart-form" data-product="{{ $phone->ProductID }}">
                                         @csrf
-                                        <input type="hidden" name="variant_id" class="selected-variant-id" value="">
+                                        <input type="hidden" name="product_id" value="{{ $phone->ProductID }}">
+                                        <input type="hidden" name="variant_id" id="variant-{{ $phone->ProductID }}" class="selected-variant-id" value="">
                                         <div class="row g-2 mb-2">
                                             <div class="col-4">
-                                                <input type="number" 
-                                                       class="form-control form-control-sm quantity-input" 
-                                                       name="quantity" 
-                                                       value="1" 
-                                                       min="1" 
-                                                       max="1" 
-                                                       data-product="{{ $phone->ProductID }}">
+                                                <div class="input-group input-group-sm">
+                                                    <button type="button" class="btn btn-outline-secondary btn-sm quantity-decrease">-</button>
+                                                    <input type="text" class="form-control form-control-sm text-center quantity-input" name="quantity" value="1" readonly data-product="{{ $phone->ProductID }}">
+                                                    <button type="button" class="btn btn-outline-secondary btn-sm quantity-increase">+</button>
+                                                </div>
                                             </div>
                                             <div class="col-8">
-                                                <button class="btn btn-primary w-100 customer-btn add-to-cart-btn" 
-                                                        type="submit" 
-                                                        data-product-id="{{ $phone->ProductID }}"
-                                                        disabled>
+                                                <button class="btn btn-primary w-100 customer-btn add-to-cart-btn" type="submit" disabled data-product-id="{{ $phone->ProductID }}">
                                                     <span class="btn-text">
                                                         <i class="fas fa-cart-plus me-1"></i>Add to Cart
                                                     </span>
@@ -261,12 +259,15 @@
                                         @csrf
                                         <div class="row g-2 mb-2">
                                             <div class="col-4">
-                                                <input type="number" 
-                                                       class="form-control form-control-sm" 
-                                                       name="quantity" 
-                                                       value="1" 
-                                                       min="1" 
-                                                       max="{{ $phone->Stock }}">
+                                                <div class="input-group input-group-sm">
+                                                    <button type="button" class="btn btn-outline-secondary btn-sm quantity-decrease">-</button>
+                                                    <input type="text" 
+                                                           class="form-control form-control-sm text-center quantity-input" 
+                                                           name="quantity" 
+                                                           value="1" 
+                                                           readonly>
+                                                    <button type="button" class="btn btn-outline-secondary btn-sm quantity-increase">+</button>
+                                                </div>
                                             </div>
                                             <div class="col-8">
                                                 <button class="btn btn-primary w-100 customer-btn add-to-cart-btn" 

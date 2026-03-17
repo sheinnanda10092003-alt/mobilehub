@@ -127,10 +127,10 @@ class ReportController extends Controller
         // Top customers by spending
         $topCustomers = Customer::leftJoin('orders', 'customers.CustomerID', '=', 'orders.CustomerID')
                                ->where('orders.Status', '!=', 'cancelled')
-                               ->select('customers.*')
+                               ->select('customers.CustomerID', 'customers.Name', 'customers.Email', 'customers.created_at', 'customers.updated_at')
                                ->selectRaw('COALESCE(SUM(orders.TotalAmount), 0) as total_spent')
                                ->selectRaw('COUNT(orders.OrderID) as order_count')
-                               ->groupBy('customers.CustomerID')
+                               ->groupBy('customers.CustomerID', 'customers.Name', 'customers.Email', 'customers.created_at', 'customers.updated_at')
                                ->orderBy('total_spent', 'desc')
                                ->limit(10)
                                ->get();

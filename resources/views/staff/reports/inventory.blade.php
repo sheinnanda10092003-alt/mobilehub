@@ -318,9 +318,11 @@
             <!-- Pagination -->
             <div class="d-flex justify-content-between align-items-center p-3 border-top">
                 <div class="text-muted">
-                    Showing {{ $products->firstItem() }} to {{ $products->lastItem() }} of {{ $products->total() }} products
+                    Showing {{ $products->firstItem() }} to {{ $products->lastItem() }} of {{ $products->total() }} results
                 </div>
-                {{ $products->appends(request()->query())->links() }}
+                <div>
+                    {{ $products->appends(request()->query())->links('pagination::bootstrap-5') }}
+                </div>
             </div>
         @else
             <div class="text-center py-5">

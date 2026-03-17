@@ -20,8 +20,7 @@ class CustomerController extends Controller
         if ($request->has('search') && $request->search) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
-                $q->where('FirstName', 'like', '%' . $search . '%')
-                  ->orWhere('LastName', 'like', '%' . $search . '%')
+                $q->where('Name', 'like', '%' . $search . '%')
                   ->orWhere('Email', 'like', '%' . $search . '%')
                   ->orWhere('Phone', 'like', '%' . $search . '%');
             });

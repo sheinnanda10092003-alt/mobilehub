@@ -33,7 +33,7 @@ class CartController extends Controller
     public function add(Request $request, Product $product)
     {
         $request->validate([
-            'quantity' => 'required|integer|min:1|max:' . $product->Stock
+            'quantity' => 'required|integer|min:1'
         ]);
 
         $customerId = Auth::id();

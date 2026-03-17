@@ -341,7 +341,8 @@ $(document).ready(function() {
         selectElement.addClass('updating');
         
         $.ajax({
-            url: `{{ route('staff.orders.updateStatus', '') }}/${orderId}`,
+            url: route('staff.orders.updateStatus', ['id' => $order->id])
+                .replace(':id', orderId),
             method: 'PUT',
             data: {
                 status: newStatus,
@@ -379,11 +380,12 @@ $(document).ready(function() {
     });
     
     // Handle payment status modal
-    $('.payment-status-btn').on('click', function() {
-        let orderId = $(this).data('order-id');
-        let actionUrl = `{{ route('staff.orders.updatePaymentStatus', '') }}/${orderId}`;
-        $('#paymentStatusForm').attr('action', actionUrl);
-    });
+$('.payment-status-btn').on('click', function() {
+    let orderId = $(this).data('order-id');
+    let actionUrl = `/staff/orders/${orderId}/payment`;
+    $('#paymentStatusForm').attr('action', actionUrl);
+});
+
     
     // Handle payment status form submission
     $('#paymentStatusForm').on('submit', function(e) {
